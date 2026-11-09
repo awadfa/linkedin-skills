@@ -12,7 +12,7 @@ Ship long-form LinkedIn posts using hook formulas that actually performed in 202
 Read `../../references/real-estate-workspace.md` for property-content tasks.
 Turn the planner's briefs into full drafts using verified facts and supplied
 notes. Do not invent client results, current prices or guaranteed returns.
-Submit each draft for review; do not call a publication API or paid tool.
+For any market statistic, read `../../references/market-evidence.md` and require an evidence bundle with original source URL, publication date, coverage period, retrieval date and explicit human verification. Use `python3 scripts/real_estate_workspace.py review-evidence --input testing/evidence.json` before presenting a data-bearing draft. This checks completeness, not factual truth. If evidence is absent or fails, omit the statistic rather than inventing it. Clearly label independent analysis and show its method. Include source attribution with the review draft. Submit each draft for review; do not call a publication API or paid tool.
 
 ## When to use
 
