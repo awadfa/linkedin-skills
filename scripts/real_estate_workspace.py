@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib.real_estate_workspace import content_briefs, clay_search_plan, qualify_contacts, contacts_csv
 from lib.market_evidence import load_bundle, EvidenceError
 from lib.market_data_import import summarize_csv
+from lib.market_post_draft import build_market_post
 
 
 def main(argv=None):
@@ -27,6 +28,9 @@ def main(argv=None):
     leads.add_argument('--csv', action='store_true')
     evidence = sub.add_parser('review-evidence', help='Validate sourced draft; never publish')
     evidence.add_argument('--input', required=True, help='Local JSON with draft and claims')
+    post = sub.add_parser('market-post', help='Generate a source-linked review-only draft')
+    post.add_argument('--input', required=True, help='JSON with draft and human-verified claims')
+    post.add_argument('--audience', default='Dubai property investors')
     market = sub.add_parser('market-compare', help='Summarize a locally downloaded CSV, unverified')
     for name in ('input', 'date-column', 'amount-column', 'first-start', 'first-end', 'second-start', 'second-end', 'source-name', 'source-url', 'retrieved-on', 'published-on'):
         market.add_argument('--' + name, required=True)
@@ -44,6 +48,9 @@ def main(argv=None):
                                    second_start=args.second_start, second_end=args.second_end,
                                    source_name=args.source_name, source_url=args.source_url,
                                    retrieved_on=args.retrieved_on, published_on=args.published_on)
+        elif args.command == 'market-post':
+            payload = read(args.input)
+            result = build_market_post(payload['draft'], payload['claims'], audience=args.audience)
         elif args.command == 'review-evidence':
             result = load_bundle(args.input)
         elif args.command == 'clay-plan':
