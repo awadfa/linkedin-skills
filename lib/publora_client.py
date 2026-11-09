@@ -81,7 +81,8 @@ class PubloraClient:
                 "PUBLORA_API_KEY not set. Export it or pass api_key= explicitly."
             )
         self.timeout = timeout
-        self._session = requests.Session()
+        from .workspace_policy import guarded_session
+        self._session = guarded_session()
         self._session.headers.update(
             {
                 "x-publora-key": self.api_key,

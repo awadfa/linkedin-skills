@@ -1,3 +1,18 @@
+# Awad real estate development fork
+
+Default: zero-cost preparation of Dubai property content and Clay prospect
+research, with human review and manual publishing/outreach. Existing API keys
+do not enable paid backends in the default profile.
+
+Start with [the real estate workflow](references/real-estate-workspace.md).
+Run `python3 scripts/real_estate_workspace.py --help` without installing packages.
+The CLI prepares briefs, query plans and qualified results; the existing writing
+skills produce the posts. It does not execute Clay, generate via a paid model,
+schedule content or send messages. No release or main-branch merge is implied.
+
+The upstream documentation follows; backend setup and pricing statements below
+are historical and do not override this fork's zero-cost policy.
+
 <p align="center">
   <img src="assets/linkedin-skills-hero.png" alt="12 Claude Code and Codex skills for LinkedIn marketing — open source, MIT licensed" width="900" />
 </p>

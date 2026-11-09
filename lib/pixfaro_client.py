@@ -104,7 +104,8 @@ class PixfaroClient:
                 "Sign up at https://api.pixfaro.com/signup?ref=linkedin-skills."
             )
         self.timeout = timeout
-        self._session = requests.Session()
+        from .workspace_policy import guarded_session
+        self._session = guarded_session()
         self._cache: "OrderedDict[str, tuple[float, dict]]" = OrderedDict()
 
     # ---- cache helpers (mirror apify_client) ----

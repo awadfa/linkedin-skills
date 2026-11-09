@@ -7,6 +7,15 @@ description: "Generate a 7-day LinkedIn content plan from a theme, audience, and
 
 Produce a 7-day LinkedIn plan built around the 3-pillar discipline (Authority 40-50%, Personal Narrative 30-40%, Community 20-30%). Optionally adds a Product/Offer pillar at 10-15%.
 
+## Dubai real estate workflow
+
+For Dubai property content, read `../../references/real-estate-workspace.md`.
+Generate three briefs with `scripts/real_estate_workspace.py content-plan`
+from the repository root, then use `linkedin-post-writer` for full drafts.
+Use Asia/Dubai proposed dates, sourced facts and the supplied professional
+identity. Keep every item in Draft state; dates never schedule publication.
+Do not run paid services or propose a paid upgrade. Deliver a review batch.
+
 ## When to use
 
 - User asks "plan my week" or "what should I post this week"

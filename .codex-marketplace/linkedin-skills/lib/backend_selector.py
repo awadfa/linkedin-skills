@@ -34,6 +34,7 @@ import subprocess
 from typing import Any, Literal, Optional
 
 from ._env import load_env
+from .workspace_policy import zero_cost_mode
 
 load_env()
 
@@ -90,6 +91,8 @@ def active_backend() -> BackendName:
     auto-post even if they also have a custom poster, unless they remove
     the Publora env var.
     """
+    if zero_cost_mode():
+        return "manual"
     if os.getenv("PUBLORA_API_KEY") and os.getenv("LINKEDIN_PLATFORM_ID"):
         return "publora"
     if os.getenv("LINKEDIN_SKILLS_CUSTOM_POSTER"):
@@ -131,6 +134,10 @@ def manual_mode_message(draft_text: str, target_url: str, kind: str = "comment")
     It also used to offer only the API-key route. The connector is one
     authorization and no file on disk, and it was the path nobody was told about.
     """
+    if zero_cost_mode():
+        return (f"Draft for review. Nothing published or scheduled.\n\n"
+                f"Target: {target_url}\nAction: {kind}\n\n{draft_text}\n\n"
+                "Review the exact text before manually publishing it.")
     return f"""✅ Draft approved. Copy the text below and paste it as a {kind} on LinkedIn:
 
 ```
@@ -388,7 +395,7 @@ def fetch_post(url: str, **kwargs: Any) -> Optional[dict]:
         Post payload dict on success, or None if `APIFY_TOKEN` is not set
         or the Apify call errors. Callers should fall back to user-paste.
     """
-    if not os.getenv("APIFY_TOKEN"):
+    if zero_cost_mode() or not os.getenv("APIFY_TOKEN"):
         return None
     try:
         from .apify_client import ApifyClient, ApifyError
@@ -486,6 +493,8 @@ ILLUSTRATION_ASPECTS = {
 
 def image_backend() -> Literal["pixfaro", "manual"]:
     """`pixfaro` when PIXFARO_TOKEN (or PIXFARO_API_KEY) is set, else `manual`."""
+    if zero_cost_mode():
+        return "manual"
     if os.getenv("PIXFARO_TOKEN") or os.getenv("PIXFARO_API_KEY"):
         return "pixfaro"
     return "manual"

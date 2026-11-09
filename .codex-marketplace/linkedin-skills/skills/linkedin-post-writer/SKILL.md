@@ -7,6 +7,13 @@ description: "Draft a new LinkedIn post from scratch using one of 20 2026 hook f
 
 Ship long-form LinkedIn posts using hook formulas that actually performed in 2025-2026 (verified engagement multipliers).
 
+## Dubai real estate workflow
+
+Read `../../references/real-estate-workspace.md` for property-content tasks.
+Turn the planner's briefs into full drafts using verified facts and supplied
+notes. Do not invent client results, current prices or guaranteed returns.
+Submit each draft for review; do not call a publication API or paid tool.
+
 ## When to use
 
 - User says "write me a LinkedIn post about X"

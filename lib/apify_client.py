@@ -98,7 +98,8 @@ class ApifyClient:
                 "APIFY_TOKEN not set. Export it or pass token= explicitly."
             )
         self.timeout = timeout
-        self._session = requests.Session()
+        from .workspace_policy import guarded_session
+        self._session = guarded_session()
         self._cache: OrderedDict[str, tuple[float, Any]] = OrderedDict()
 
     # ---- Post body --------------------------------------------------------
