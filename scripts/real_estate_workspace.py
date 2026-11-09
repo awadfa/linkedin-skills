@@ -10,6 +10,7 @@ from lib.real_estate_workspace import content_briefs, clay_search_plan, qualify_
 from lib.market_evidence import load_bundle, EvidenceError
 from lib.market_data_import import summarize_csv
 from lib.market_post_draft import build_market_post
+from lib.quarterly_real_estate import analyze_quarters, QuarterlyDataError
 
 
 def main(argv=None):
@@ -28,6 +29,10 @@ def main(argv=None):
     leads.add_argument('--csv', action='store_true')
     evidence = sub.add_parser('review-evidence', help='Validate sourced draft; never publish')
     evidence.add_argument('--input', required=True, help='Local JSON with draft and claims')
+    quarterly = sub.add_parser('quarterly-report', help='Analyze quarterly aggregate CSV without publishing')
+    quarterly.add_argument('--input', required=True)
+    quarterly.add_argument('--year', type=int)
+    quarterly.add_argument('--transaction', default='Sales')
     post = sub.add_parser('market-post', help='Generate a source-linked review-only draft')
     post.add_argument('--input', required=True, help='JSON with draft and human-verified claims')
     post.add_argument('--audience', default='Dubai property investors')
@@ -48,6 +53,8 @@ def main(argv=None):
                                    second_start=args.second_start, second_end=args.second_end,
                                    source_name=args.source_name, source_url=args.source_url,
                                    retrieved_on=args.retrieved_on, published_on=args.published_on)
+        elif args.command == 'quarterly-report':
+            result = analyze_quarters(args.input, transaction=args.transaction, year=args.year)
         elif args.command == 'market-post':
             payload = read(args.input)
             result = build_market_post(payload['draft'], payload['claims'], audience=args.audience)
