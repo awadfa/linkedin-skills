@@ -4,19 +4,27 @@ Status: **DRAFT ONLY**. No automatic publishing, outreach or scheduling.
 Audience: Dubai real-estate investors, international business contacts, referral partners.
 Voice: concise, analytical, practical; avoid guaranteed returns and unsupported statistics.
 
-## Draft 1 — Price vs investment quality
+## Draft 1 — Price vs investment quality (revised for owner review)
 
-A lower asking price doesn't automatically mean a better property investment in Dubai.
+A lower price doesn't always mean a better investment.
 
-Before comparing two opportunities, I look at the full picture: entry price, service charges, realistic rental demand, exit liquidity, developer or building track record, and the investor's time horizon.
+In Dubai real estate, I've learned that the real question isn't simply how much a property costs.
 
-Two units at similar prices can carry very different risks and ownership costs.
+It's what you're actually getting for that price.
 
-My approach is simple: understand the investor's objective first, then evaluate the asset against it.
+Service charges, rental demand, location, building quality, resale potential, and the investor's long-term objective all matter.
 
-What matters most to you when assessing a property investment: income, appreciation, or flexibility?
+Two properties can have similar prices and completely different investment profiles.
 
-*Evidence status:* General professional commentary. No numerical market claims.
+That's why I believe a good investment conversation should start with understanding the objective, not presenting a list of available units.
+
+The right opportunity isn't necessarily the cheapest one.
+
+It's the one that makes sense for the person investing.
+
+**Clarity before commitment. Always.**
+
+*Status:* Revised text-only draft; **not approved or published**. General professional commentary, no numerical market claims.
 
 ## Draft 2 — Reading quarterly market data
 
