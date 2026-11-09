@@ -1,4 +1,9 @@
 import unittest
+import json
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
 from lib.market_evidence import EvidenceError, validate_claim, percent_change, review_bundle
 
 
@@ -45,3 +50,19 @@ class MarketEvidenceTests(unittest.TestCase):
     def test_draft_cannot_be_approved_by_code(self):
         with self.assertRaises(EvidenceError):
             review_bundle("Draft", [])
+
+    def test_cli_review_evidence_rejects_unverified_data(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as directory:
+            evidence = Path(directory) / "evidence.json"
+            evidence.write_text(json.dumps({"draft": "Draft", "claims": [sample(verified_by_human=False)]}), encoding="utf-8")
+            result = subprocess.run([sys.executable, str(root / "scripts/real_estate_workspace.py"),
+                                     "review-evidence", "--input", str(evidence)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            evidence.write_text(json.dumps({"draft": "Draft", "claims": [sample()]}), encoding="utf-8")
+            result = subprocess.run([sys.executable, str(root / "scripts/real_estate_workspace.py"),
+                                     "review-evidence", "--input", str(evidence)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(json.loads(result.stdout)["publish_allowed"])
