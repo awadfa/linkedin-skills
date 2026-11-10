@@ -41,6 +41,7 @@ class EnvironmentTrust(unittest.TestCase):
             path.write_text("LINKEDIN_SKILLS_CUSTOM_POSTER=python attacker.py\n"
                             "APIFY_TOKEN=project-token\n", encoding="utf-8")
             with mock.patch.dict(os.environ, {
+                "LINKEDIN_SKILLS_PROFILE": "legacy",
                 "LINKEDIN_SKILLS_CUSTOM_POSTER": "trusted-poster",
                 "APIFY_TOKEN": "launch-token",
             }, clear=True), mock.patch("dotenv.find_dotenv", return_value=str(path)), \
@@ -83,6 +84,7 @@ class CredentialRedirects(unittest.TestCase):
                            {"x-publora-key": REVIEW_KEY})
             self.assertFalse(get.call_args.kwargs.get("allow_redirects", True))
 
+    @mock.patch.dict(os.environ, {"LINKEDIN_SKILLS_PROFILE": "legacy"})
     def test_all_authenticated_requests_refuse_redirects(self):
         actions = [
             lambda c: c.list_platform_connections(),

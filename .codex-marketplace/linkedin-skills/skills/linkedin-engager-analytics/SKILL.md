@@ -1,6 +1,6 @@
 ---
 name: linkedin-engager-analytics
-description: "Pull the people who liked or commented on any LinkedIn post and segment them by ICP fit (peer / aspirational / prospect / other). Produces an engager roster, tier breakdown, and outbound action lists (follow back, comment-drop, DM-able with one-line openers). Powered by Apify, no LinkedIn login. Triggers on \"who liked my post\", \"who engaged\", \"engagers report\", \"audience analytics\". Not for tracking author replies to your comments (use linkedin-thread-monitor)."
+description: "Research real estate referral prospects with connected Clay and qualify existing public results, or segment supplied LinkedIn engagers by ICP fit. Use for football agents, business managers, family offices and wealth advisers. Default to zero-cost research and manual outreach. Not for tracking author replies (use linkedin-thread-monitor)."
 ---
 
 # LinkedIn Engager Analytics
@@ -8,6 +8,17 @@ description: "Pull the people who liked or commented on any LinkedIn post and se
 Pull every liker and commenter on a LinkedIn post and bucket them by ICP fit. Outputs a roster + action list you can feed into your DM or outreach queue.
 
 Needs a read credential: `APIFY_TOKEN`, or the Apify MCP connector (the only option on claude.ai). With neither, falls back to user-paste of the engager list.
+
+## Clay prospect research (default for this fork)
+
+Read `../../references/real-estate-workspace.md` for the cost gate, field
+mapping, deduplication and commands. Prepare the Clay search locally, confirm
+the connected operation is free, retrieve task context and qualify public
+results against existing outreach. If cost is unknown, stop before the tool
+call and deliver the plan. No email enrichments or customer database queries.
+Draft personalized notes only after checking current roles. Never send them.
+The Apify workflow below is legacy documentation, not permission to scrape or
+spend credits. In the default profile, use supplied data instead.
 
 ## When to use
 

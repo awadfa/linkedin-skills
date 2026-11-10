@@ -164,7 +164,7 @@ class BackendDispatch(unittest.TestCase):
     def test_a_custom_poster_takes_over_from_manual(self):
         from lib import backend_selector
 
-        with mock.patch.dict("os.environ", {"LINKEDIN_SKILLS_CUSTOM_POSTER": "/bin/true"}, clear=True):
+        with mock.patch.dict("os.environ", {"LINKEDIN_SKILLS_PROFILE": "legacy", "LINKEDIN_SKILLS_CUSTOM_POSTER": "/bin/true"}, clear=True):
             self.assertEqual(backend_selector.active_backend(), "diy")
 
     def test_publora_needs_both_halves(self):
@@ -183,7 +183,8 @@ class BackendDispatch(unittest.TestCase):
                 "post", "a drafted post", "https://www.linkedin.com/post/new/"
             )
         self.assertTrue(message.strip(), "manual mode said nothing at all")
-        self.assertIn("publora", message.lower(), "manual mode does not mention the write layer")
+        self.assertIn("review", message.lower())
+        self.assertNotIn("sign up", message.lower())
 
 
 if __name__ == "__main__":
@@ -366,7 +367,7 @@ class UnpublishLimits(unittest.TestCase):
         client.delete_post.side_effect = PubloraError(
             "refusing to delete post group x: status is 'published'")
         with mock.patch.dict("os.environ",
-                             {"PUBLORA_API_KEY": "k", "LINKEDIN_PLATFORM_ID": "linkedin-1"},
+                             {"LINKEDIN_SKILLS_PROFILE": "legacy", "PUBLORA_API_KEY": "k", "LINKEDIN_PLATFORM_ID": "linkedin-1"},
                              clear=True), \
              mock.patch("lib.publora_client.PubloraClient", return_value=client), \
              self.assertRaises(PubloraError):
@@ -377,7 +378,7 @@ class UnpublishLimits(unittest.TestCase):
         from lib import backend_selector
 
         with mock.patch.dict("os.environ",
-                             {"PUBLORA_API_KEY": "k", "LINKEDIN_PLATFORM_ID": "linkedin-1"},
+                             {"LINKEDIN_SKILLS_PROFILE": "legacy", "PUBLORA_API_KEY": "k", "LINKEDIN_PLATFORM_ID": "linkedin-1"},
                              clear=True), \
              mock.patch("lib.publora_client.PubloraClient") as client:
             self.assertIsNone(backend_selector.unpublish())

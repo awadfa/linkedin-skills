@@ -32,6 +32,7 @@ import tempfile
 import time
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 USER_AGENT = "linkedin-skills-selftest/1"
 
 GREEN, RED, YELLOW, GREY, BOLD, OFF = "\033[32m", "\033[31m", "\033[33m", "\033[90m", "\033[1m", "\033[0m"
@@ -249,7 +250,7 @@ def phase_accounts(offline: bool) -> tuple[Phase, dict]:
 
 
 # ----------------------------------------------------------------- tests ----
-def phase_tests(root: pathlib.Path) -> Phase:
+def phase_tests(root: pathlib.Path, offline: bool = False) -> Phase:
     phase = Phase("Tests")
     if not (root / "tests").is_dir():
         phase.add(WARN, "suite", "no tests/ directory in this checkout")
@@ -270,6 +271,9 @@ def phase_tests(root: pathlib.Path) -> Phase:
                           ("check_frontmatter.py", "skill frontmatter"),
                           ("check_markdown_references.py", "markdown references"),
                           ("check_no_secrets.py", "no tracked credentials")):
+        if offline and script == "check_actor_inputs.py":
+            phase.add(SKIP, label, "offline: live schema fetch skipped")
+            continue
         path = root / "scripts" / script
         if not path.is_file():
             continue
@@ -482,6 +486,10 @@ def main() -> int:
     parser.add_argument("--offline", action="store_true", help="never touch the network")
     args = parser.parse_args()
 
+    from lib.workspace_policy import zero_cost_mode
+    if zero_cost_mode():
+        args.offline = True
+
     if args.fresh:
         return run_fresh(sys.argv[1:])
 
@@ -489,7 +497,7 @@ def main() -> int:
     phases = [phase_install(root)]
     accounts, live = phase_accounts(args.offline)
     phases.append(accounts)
-    phases.append(phase_tests(root))
+    phases.append(phase_tests(root, offline=args.offline))
     phases.append(phase_coverage(root, live))
     if args.live and not args.offline:
         phases.append(phase_live(live, args.yes))

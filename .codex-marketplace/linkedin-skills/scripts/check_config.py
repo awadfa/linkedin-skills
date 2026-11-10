@@ -327,6 +327,9 @@ def main() -> int:
         help="skip live API calls; check local wiring and variable shape only",
     )
     args = parser.parse_args()
+    from lib.workspace_policy import zero_cost_mode
+    if zero_cost_mode():
+        args.offline = True
 
     try:
         from lib._env import load_env

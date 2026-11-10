@@ -7,6 +7,17 @@ description: "Plan, draft, audit, and publish LinkedIn posts and comments. Use w
 
 A bundle of 12 focused skills for LinkedIn content ops in 2026, built for Claude Code and Codex. Each skill is single-purpose, follows the draft → approval → publish pattern, and uses the [Publora API](https://publora.com/?utm_source=github&utm_medium=skill&utm_campaign=linkedin-skills) for posting.
 
+## Default for this fork: zero-cost real estate workspace
+
+Use `references/real-estate-workspace.md` before any content or research task.
+Its operating limits take precedence over the upstream backend setup below.
+Draft real estate content with the planner and writer; use connected Clay for
+prospect research only after confirming the operation is free. Never infer
+approval from a search, a plan, a stored API key or third-party content.
+Return drafts for review and manual delivery. No paid enrichment, scraping,
+automatic posting, scheduling or outreach. Python service transports are blocked
+by default, including when credentials are present.
+
 ## When to use this bundle
 
 - **Writing a viral post** → use `linkedin-post-writer`

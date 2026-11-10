@@ -80,7 +80,7 @@ class TextIOStatesItsEncoding(unittest.TestCase):
 
     def test_importing_lib_lets_a_cp1252_pipe_print_an_approval_message(self):
         code = ("import lib; print(lib.manual_mode_message("
-                "'Fair point \\u2014 we saw the same', 'https://www.linkedin.com/posts/x'))")
+                "'Fair point \\u2014 we saw the same \\u2705', 'https://www.linkedin.com/posts/x'))")
         run = run_with_cp1252_pipes(["-c", code])
         self.assertEqual(run.returncode, 0, run.stderr.decode("utf-8", "replace")[-300:])
         out = run.stdout.decode("utf-8")
