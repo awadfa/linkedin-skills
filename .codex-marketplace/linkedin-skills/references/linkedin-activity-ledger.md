@@ -1,6 +1,6 @@
 # LinkedIn Activity Ledger — specification (v1)
 
-Status: SPECIFICATION ONLY. No LinkedIn integration, automated capture, or backfill is claimed.
+Status: Offline JSONL append/export implementation available. No LinkedIn integration, automated capture, or backfill is claimed.
 Owner: Awad. Scope: personal professional LinkedIn activity. Zero-cost by default.
 
 ## Purpose
@@ -38,5 +38,12 @@ Keep a reviewable, append-only audit trail of what was actually done on LinkedIn
 9. Publishing and first-time outbound messages require owner approval under current project policy.
 10. Provide weekly review grouped by: published posts, comments/replies, reactions, connection requests, DMs, voice mismatches, and verified outcomes.
 
-## First implementation milestone
-Create a Notion activity log using the fields above, have Work capture each action immediately, then build a read-only export/review view. Start with the previously verified Michael Francis comment and 20 reactions as *partial historical entries*, without inventing missing URLs.
+## Offline implementation
+
+Use `scripts/real_estate_workspace.py activity-log --ledger testing/activity.jsonl --input testing/activity.json` to append one user-reviewed record. Omit `--input` for a summary; use `--csv` for a Google Sheets-compatible export. These operations make no network calls. Keep actual records in ignored `testing/` or a private folder outside the repository.
+
+The CLI enforces required identity/source/deduplication fields, timezone or explicit `unknown`, exact text, reaction type and evidence for verified actions. Other schema fields are supplied by the operator when available. A human must assess whether evidence is truthful and whether a dedupe key identifies the same action. The tool cannot verify a LinkedIn send or detect differently keyed duplicates.
+
+Corrections append a new unique `activity_id` with `supersedes` pointing to the latest record, the same `dedupe_key`, and a nonempty `correction_reason`. Never overwrite the original. Summary/export uses only the latest revision and counts only `verified` actions as completed. Review feedback can be appended this way without replacing verbatim text. JSONL retains the full history; CSV escapes formula-leading cells without changing the stored text.
+
+Single-writer local use only; concurrent writers are unsupported. Back up private logs separately. Notion remains the operational source for previously recorded activity; no automatic synchronization or historical import has occurred.

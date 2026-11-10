@@ -40,7 +40,7 @@ Test that missing verification is rejected.
 or company-owned data to the GitHub repository.**
 
 Verification on 10 November 2026: repository writes succeeded by creating
-`dev/completion-review`. The full offline suite passed 189 tests. Its initial
+`dev/completion-review`. The baseline offline suite passed 189 tests; the completed ledger build passed 195 tests. Its initial
 selftest found four unsynchronized marketplace references; these were restored.
 After synchronization, all offline selftest phases passed. No paid endpoints,
 model evaluations, posting or scraping were executed. Real DLD data acquisition
