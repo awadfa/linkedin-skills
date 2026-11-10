@@ -25,18 +25,15 @@ otherwise.
 - Only bump MINOR or MAJOR when **the user explicitly asks** for a
   higher rank ("this is minor", "make it 2.0", "bump major"). Do not
   promote on your own initiative even if semver textbook says so.
-- After bumping, two steps are required:
-  1. Tag the commit: `git tag -a v<X.Y.Z> -m "..."` + `git push origin v<X.Y.Z>`
-  2. **Publish a GitHub Release** for the tag: `gh release create v<X.Y.Z> --title "v<X.Y.Z>" --notes "<changelog>" --latest`
-  A tag alone does NOT update the README release badge or the
-  Releases page. The shields.io badge reads from the Releases API,
-  not from raw tags. Skipping step 2 leaves the badge stale.
+- Development work does not authorize tags, GitHub Releases or merges.
+  Keep work on a development branch and prepare a Pull Request for review.
+  Publish a release or merge only after explicit owner approval.
 
 ## Commits
 
-- Primary author **must** be Sergey: every `git commit` needs
-  `--author="Sergey Bulaev <s@bulaev.org>"`. Verify with
-  `git log -1 --format='%an <%ae>'` before pushing.
+- Attribute new fork changes to the actual contributor or repository owner.
+  Never impersonate the upstream author. Preserve upstream history and the MIT
+  copyright notice; attribution is not ownership of new contributions.
 - Co-author trailers are fine when appropriate.
 - Verify locally before push: build never breaks, no broken refs in
   `SKILL.md`, library smoke import passes.

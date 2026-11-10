@@ -1,6 +1,6 @@
 # Zero-cost release verification checklist
 
-**Status:** development branch only. Do not merge or publish until tests pass.
+**Status:** development branch only. Passing tests permits review, not an automatic merge or release.
 
 ## Run locally (no third-party services or paid API calls)
 
@@ -29,8 +29,8 @@ Test that missing verification is rejected.
 ## Required before merge
 
 - [ ] Run complete Python unittest suite and record exact passing test count
-- [ ] Confirm original DLD CSV source, download permissions and actual column names
-- [ ] Check source period, units, transaction types, duplicate handling
+- [ ] For real market figures: confirm original DLD CSV source, download permissions and actual column names
+- [ ] For real market data: check source period, units, transaction types, duplicate handling
 - [ ] Confirm every published market number has reviewed evidence
 - [ ] Confirm zero-cost profile and no HTTP, posting, outreach or scheduling calls
 - [ ] Review any changes to original upstream posting instructions
@@ -39,6 +39,10 @@ Test that missing verification is rejected.
 **Never upload private prospect lists, client phone numbers, authentication tokens
 or company-owned data to the GitHub repository.**
 
-Current environment limitation: connected GitHub permits editing the development
-branch but does not itself execute Python tests. Local clone attempt failed due to
-DNS/network restrictions; no test success is claimed.
+Verification on 10 November 2026: repository writes succeeded by creating
+`dev/completion-review`. The full offline suite passed 189 tests. Its initial
+selftest found four unsynchronized marketplace references; these were restored.
+After synchronization, all offline selftest phases passed. No paid endpoints,
+model evaluations, posting or scraping were executed. Real DLD data acquisition
+and publication approval remain per-post gates, not requirements to use the
+offline preparation tools. Never treat synthetic fixtures as market facts.
