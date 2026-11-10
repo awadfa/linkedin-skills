@@ -1,3 +1,5 @@
+[Start here: owner operation and clean handoff](references/owner-operating-guide.md)
+
 # Awad real estate development fork
 
 Default: zero-cost preparation of Dubai property content and Clay prospect

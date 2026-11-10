@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from lib.real_estate_workspace import content_briefs, clay_search_plan, qualify_contacts, contacts_csv
+from lib.activity_ledger import append_record, read_records, summary, export_csv
 from lib.market_evidence import load_bundle, EvidenceError
 from lib.market_data_import import summarize_csv
 from lib.market_post_draft import build_market_post
@@ -39,10 +40,24 @@ def main(argv=None):
     market = sub.add_parser('market-compare', help='Summarize a locally downloaded CSV, unverified')
     for name in ('input', 'date-column', 'amount-column', 'first-start', 'first-end', 'second-start', 'second-end', 'source-name', 'source-url', 'retrieved-on', 'published-on'):
         market.add_argument('--' + name, required=True)
+    ledger = sub.add_parser('activity-log', help='Local single-writer append-only log; no network calls')
+    ledger.add_argument('--ledger', required=True, help='Private JSONL path, e.g. testing/activity.jsonl')
+    ledger.add_argument('--input', help='One activity JSON; omitted for read-only summary/export')
+    ledger.add_argument('--csv', action='store_true')
     args = ap.parse_args(argv)
     read = lambda path: json.loads(Path(path).read_text(encoding='utf-8-sig'))
     try:
-        if args.command == 'content-plan':
+        if args.command == 'activity-log':
+            if args.input and args.csv:
+                raise ValueError('Append and export are separate operations.')
+            if args.input:
+                result = append_record(args.ledger, read(args.input))
+            elif args.csv:
+                print(export_csv(read_records(args.ledger)), end='')
+                return 0
+            else:
+                result = summary(read_records(args.ledger))
+        elif args.command == 'content-plan':
             notes = read(args.notes) if args.notes else []
             if not isinstance(notes, list) or any(not isinstance(x, str) for x in notes):
                 raise ValueError('Notes must be a JSON array of strings.')
